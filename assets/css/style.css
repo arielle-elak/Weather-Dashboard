@@ -4,3 +4,69 @@
  * Last Edited by Arielle Sept 4 2022
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
+
+ul {
+    list-style-type: none;
+    padding-left: 0px;
+}
+
+header {
+    text-align: center;
+    margin: 1rem;
+}
+
+#sideBody {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+}
+
+#searchBox, #citiesHistory {
+    margin: 1rem;
+    text-align: center;
+}
+
+#textBox, #submitBtn, .cities {
+    width: 100%;
+    margin: .5rem;
+}
+
+
+#mainBody {
+
+}
+
+#oneDay {
+    border: 1px solid black;
+    padding: .5rem;
+    margin: 1rem;
+    padding: 2rem;
+}
+
+#cityDate {
+
+}
+
+#weatherInfo {
+
+}
+
+#fiveDay {
+
+    padding: .5rem;
+    margin: 1rem;
+}
+
+#weatherBlocks {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.dayBlock {
+    width: 18%;
+    border: 1px solid black;
+    padding: 1rem;
+}
