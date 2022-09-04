@@ -13,6 +13,7 @@ ul {
 header {
     text-align: center;
     margin: 1rem;
+
 }
 
 #sideBody {
@@ -32,10 +33,6 @@ header {
 }
 
 
-#mainBody {
-
-}
-
 #oneDay {
     border: 1px solid black;
     padding: .5rem;
@@ -43,16 +40,7 @@ header {
     padding: 2rem;
 }
 
-#cityDate {
-
-}
-
-#weatherInfo {
-
-}
-
 #fiveDay {
-
     padding: .5rem;
     margin: 1rem;
 }
