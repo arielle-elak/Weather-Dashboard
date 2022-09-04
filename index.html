@@ -1,0 +1,74 @@
+<!--
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * Weather Dashboard HTML
+ * Last Edited by Arielle Sept 4 2022
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel = "stylesheet" href="assets/css/style.css">
+    <title>Weather Dashboard</title>
+</head>
+<body>
+    <header>
+        <h1>Weather Dashboard</h1>
+    </header>
+
+    <!--START Sidebar content for initial search-->
+    <section id="sideBody">
+        <div id = searchBox>
+            <h2>Search for a City:</h2>
+            <input type="text" id = "searchBox" name="Search">
+            <input type="submit">
+        </div>
+        <div id = presetCities>
+            <button class="cities" id="austin">Austin</button>
+            <button class="cities" id="chicago">Chicago</button>
+            <button class="cities" id="newYork">New York</button>
+            <button class="cities" id="orlando">Orlando</button>
+            <button class="cities" id="sanFrancisco">San Francisco</button>
+            <button class="cities" id="seattle">Seattle</button>
+            <button class="cities" id="denver">Denver</button>
+            <button class="cities" id="atlanta">Atlanta</button>
+        </div>
+    </section>
+    <!--END Sidebar content for initial search-->
+
+    <!--START Main body content for displaying weather-->
+    <section id="mainBody">
+        <div id ="oneDay">
+            <div id ="cityDate">
+                <h2>Atlanta (3/30/2021) [ICON]</h2>
+                <!--Title of city and current date will go here-->
+            </div>
+            <div id ="weatherInfo">
+                <ul>
+                    <li>Temp:</li>
+                    <li>Wind:</li>
+                    <li>Humidity:</li>
+                    <li>UV Index:</li>
+                </ul>
+                <!--Weather info for the selected city will go here-->
+            </div>
+        </div>
+        <!--START 5-day forecast content section-->
+        <div id ="fiveDay">
+            <h3>5-Day Forecast</h3>
+            <div id="dayBlock">Day 1</div>
+            <div id="dayBlock">Day 2</div>
+            <div id="dayBlock">Day 3</div>
+            <div id="dayBlock">Day 4</div>
+            <div id="dayBlock">Day 5</div>
+            <!--Blocks for five day weather forecast will go here-->
+        </div>
+    </section>
+    <!--END Main body content for displaying weather-->
+
+    <script src="assets/js/script.js"></script>
+</body>
+</html>
