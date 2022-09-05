@@ -5,24 +5,55 @@
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-var apiKey = '435fcbf53b60753e425fe48c7b6d8c16';
-var apiURL = 'http://api.openweathermap.org/data/2.5/weather?';
+var apiKey = 'dea2c2776d8164b3f477e18601a99e35';
+
+// Test URL for fetching data
+var requestUrl = "https://api.openweathermap.org/data/2.5/weather?q=Longmont&appid=dea2c2776d8164b3f477e18601a99e35"
 
 var submitBtn = $('#submitBtn');
-var userInput = $('#textBox');
+var cityInputEl = $('#textBox');
+var oneDayWeatherEl = $('#oneDay');
+var fiveDayWeatherEl = $('#fiveDay');
 
-/**
- * Basic test for retrieving input from user from textarea element
- */
+// Handles what happens when input is typed into the city input area, and the submit button (event) takes place
+// Prevent default for unwanted behavior
+// Clear out the existing text content before putting more in
 
-function retrieveInput() {
-    var input = $.trim(userInput.val());
-    console.log(input);
-}
+var weatherInputHandler = function (event) {
+    event.preventDefault();
+    var city = cityInputEl.val.trim();
+    if (city) {
+        getWeather(city);
+        oneDayWeatherEl.textContent('');
+        fiveDayWeatherEl.textContent('');
+        cityInputEl.textContent('');
+    } else {
+        console.log("No city input");
+        return;
+    }
+};
 
-submitBtn.click(function() {
-    retrieveInput();
-});
+var previousCityHander = function (event) {
+     // `event.target` is a reference to the DOM element of the city button that is clicked
+     var prevCity = event.target.getAttribute('cities');
+
+     // If there is no city read from the button, don't attempt to fetch the weather info
+     if (prevCity) {
+       getWeather(prevCity);
+         oneDayWeatherEl.textContent = '';
+         fiveDayWeatherEl.textContent = '';
+    }
+};
+
+
+
+
+
+
+
+
+
+
 
 
 
