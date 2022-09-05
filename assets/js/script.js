@@ -129,7 +129,9 @@ submitBtn.click(function(event){
 
 /**
  * Stuff I wanna grab from the API:
- * data.main.temp (Temperature + degrees F)
- * data.weather[0].main (Conditions eg. Clouds)
- * data.weather[0].wind.speed (Wind Speed + MPH)
+ * Temperature: data.main.temp (degrees F)
+ * Humidity: data.main.humidity (+  %)
+ * Basic Description: data.weather[0].description
+ * Wind Speed: data.weather[0].wind.speed (+ MPH)
+ * Icon: data.weather[0].icon
  */
