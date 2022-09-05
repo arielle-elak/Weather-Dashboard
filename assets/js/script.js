@@ -12,6 +12,8 @@ var oneDayWeatherEl = $('#oneDay');
 var fiveDayWeatherEl = $('#fiveDay');
 var weatherSearchTerm = $('#weatherSearchTerm');
 
+var weatherSearchTerm = $('#weather-search-term');
+
 // Handles what happens when input is typed into the city input area, and the submit button (event) takes place
 // Prevent default for unwanted behavior
 // Clear out the existing text content before putting more in
@@ -23,8 +25,8 @@ var weatherInputHandler = function (event) {
     console.log(city);
     if (city) {
         getWeather(city);
-        oneDayWeatherEl.text('');
-        fiveDayWeatherEl.css('display', 'none');
+        weatherSearchTerm.text('');
+        fiveDayWeatherEl.text('');
         cityInput.text('');
     } else {
         console.log("No city input");
@@ -55,13 +57,14 @@ var previousCityHander = function (event) {
 
 var getWeather = function (city) {
 
-    var apiUrl = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=dea2c2776d8164b3f477e18601a99e35';
+    var apiUrl = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&units=imperial&appid=dea2c2776d8164b3f477e18601a99e35';
     fetch(apiUrl)
         .then(function (response) {
             if (response.ok) {
                 console.log(response);
                 response.json().then(function (data) {
                     console.log(data);
+                    // Pushes the data and city values to the displayWeather function to be used as
                     displayWeather(data, city);
                 });
             } else {
@@ -70,12 +73,15 @@ var getWeather = function (city) {
         })
         .catch(function (error) {
             console.log('Unable to connect to Open Weather API');
-        })
+        });
 };
 
-var displayWeather = function () {
-    weatherSearchTerm.textContent = city;
-}
+
+
+var displayWeather = function (data, city) {
+    weatherSearchTerm.text(city);
+    debugger;
+};
 
 // Input handler for when submit button is pressed
 // Sends the click event up to weatherInputHandler
@@ -118,3 +124,12 @@ submitBtn.click(function(event){
 // !TODO: Restrict the number of values in recent searches to 10 items (index of 9)
 
 // !TODO: When index is reached, delete the index 9 item
+
+
+
+/**
+ * Stuff I wanna grab from the API:
+ * data.main.temp (Temperature + degrees F)
+ * data.weather[0].main (Conditions eg. Clouds)
+ * data.weather[0].wind.speed (Wind Speed + MPH)
+ */
