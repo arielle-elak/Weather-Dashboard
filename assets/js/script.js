@@ -45,6 +45,35 @@ var previousCityHander = function (event) {
     }
 };
 
+/**
+ * Function retrieves data from open weather API based on the city that is provided by the user
+ * Upon fetching the info based on the retrieval URL (which includes the city)
+ * If there's a good response, and the response contains JSON, then push that data and city to the displayWeather function
+ * If it can't get a response, log an error.
+ * THEN as a final measure, if after that promise, it catches the error, then log in console that the API could not be reached
+ * And DON'T proceed onto the next function
+*/
+
+var getWeather = function (city) {
+
+    var apiUrl = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=dea2c2776d8164b3f477e18601a99e35';
+    fetch(apiUrl)
+        .then(function (response) {
+            if (response.ok) {
+                console.log(response);
+                response.json().then(function (data) {
+                    console.log(data);
+                    displayWeather(data, city);
+                });
+            } else {
+                console.log('Error:' + response.statusText);
+            }
+        })
+        .catch(function (error) {
+            console.log('Unable to connect to Open Weather API');
+        })
+};
+
 
 
 
