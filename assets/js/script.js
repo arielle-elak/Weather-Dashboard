@@ -6,27 +6,26 @@
 */
 
 var apiKey = 'dea2c2776d8164b3f477e18601a99e35';
-
-// Test URL for fetching data
-var requestUrl = "https://api.openweathermap.org/data/2.5/weather?q=Longmont&appid=dea2c2776d8164b3f477e18601a99e35"
-
 var submitBtn = $('#submitBtn');
-var cityInputEl = $('#textBox');
+var cityInput = $('#textBox');
 var oneDayWeatherEl = $('#oneDay');
 var fiveDayWeatherEl = $('#fiveDay');
+var weatherSearchTerm = $('#weatherSearchTerm');
 
 // Handles what happens when input is typed into the city input area, and the submit button (event) takes place
 // Prevent default for unwanted behavior
 // Clear out the existing text content before putting more in
 
+// Click handler for submit button
 var weatherInputHandler = function (event) {
     event.preventDefault();
-    var city = cityInputEl.val.trim();
+    var city = $.trim(cityInput.val());
+    console.log(city);
     if (city) {
         getWeather(city);
-        oneDayWeatherEl.textContent('');
-        fiveDayWeatherEl.textContent('');
-        cityInputEl.textContent('');
+        oneDayWeatherEl.text('');
+        fiveDayWeatherEl.css('display', 'none');
+        cityInput.text('');
     } else {
         console.log("No city input");
         return;
@@ -74,10 +73,15 @@ var getWeather = function (city) {
         })
 };
 
+var displayWeather = function () {
+    weatherSearchTerm.textContent = city;
+}
 
-
-
-
+// Input handler for when submit button is pressed
+// Sends the click event up to weatherInputHandler
+submitBtn.click(function(event){
+    weatherInputHandler(event);
+});
 
 
 

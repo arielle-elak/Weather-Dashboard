@@ -27,18 +27,18 @@
         <section id="sideBody" class="col-12 col-md-3 col-lg-3">
             <div id = "searchBox">
                 <label for = "textBox">Search for a City: </label>
-                <input type="text" id = "textBox" name="Search">
-                <input type="submit" id="submitBtn">
+                <input type="text" id = "textBox" name="textBox" autofocus="true">
+                <input type="submit" id="submitBtn" class="button">
             </div>
             <div id = citiesHistory>
-                <button class="cities" id="austin">Austin</button>
-                <button class="cities" id="chicago">Chicago</button>
-                <button class="cities" id="newYork">New York</button>
-                <button class="cities" id="orlando">Orlando</button>
-                <button class="cities" id="sanFrancisco">San Francisco</button>
-                <button class="cities" id="seattle">Seattle</button>
-                <button class="cities" id="denver">Denver</button>
-                <button class="cities" id="atlanta">Atlanta</button>
+                <button class="button cities" id="austin">Austin</button>
+                <button class="button cities" id="chicago">Chicago</button>
+                <button class="button cities" id="newYork">New York</button>
+                <button class="button cities" id="orlando">Orlando</button>
+                <button class="button cities" id="sanFrancisco">San Francisco</button>
+                <button class="button cities" id="seattle">Seattle</button>
+                <button class="button cities" id="denver">Denver</button>
+                <button class="button cities" id="atlanta">Atlanta</button>
             </div>
         </section>
         <!--END Sidebar content for initial search-->
@@ -47,7 +47,7 @@
         <section id="mainBody" class="col-12 col-md-9 col-lg-9">
             <div id ="oneDay">
                 <div id ="cityDate">
-                    <h2>Atlanta (3/30/2021) <i class="fa-duotone fa-sun-cloud"></i></h2>
+                    <h2><span id="weather-search-term"></span></h2>
                     <!--Title of city and current date will go here-->
                 </div>
                 <div id ="weatherInfo">
