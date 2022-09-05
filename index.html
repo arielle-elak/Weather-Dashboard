@@ -45,29 +45,33 @@
 
         <!--START Main body content for displaying weather-->
         <section id="mainBody" class="col-12 col-md-9 col-lg-9">
-            <div id ="oneDay" class = "row">
-                <div class = "col-12 col-md-4 col-lg-4">
-                    <h2 id="weather-search-term">Denver</h2>
-                    <p id ="conditions">Current Conditions: Cloudy</p>
+            <div id ="oneDay" class="row">
+
+                <div class = "col-12 col-sm-6 col-md-6 col-lg-5 col-xl-5">
                     <img id ="wicon" src="http://openweathermap.org/img/w/10n.png"/>
+                    <h2 id ="weather-search-term">Denver</h2>
+                    <p id ="conditions">Current Conditions: Cloudy</p>
+
+                    <!--Weather info for the selected city will go here-->
                 </div>
-                <!--Weather info for the selected city will go here-->
-                <ul id ="weatherList" class = "col-6 col-md-2 col-lg-2">
-                    <li>Temp: </li>
-                    <li>Temp: </li>
-                    <li>Temp: </li>
-                </ul>
 
-                <ul id ="weatherData" class = "col-6 col-md-2 col-lg-2">
-                    <li>45</li>
-                    <li>45</li>
-                    <li>45</li>
-                </ul>
+                <div class="col-6 col-sm-3 col-md-2 col-lg-2 col-xl-1">
+                    <ul id ="weatherList">
+                        <li>Temp: </li>
+                        <li>Temp: </li>
+                        <li>Temp: </li>
+                    </ul>
+                </div>
 
+                <div class="col-6 col-sm-3 col-md-2 col-lg-2 col-xl-1">
+                    <ul id ="weatherData">
+                        <li>45</li>
+                        <li>45</li>
+                        <li>45</li>
+                    </ul>
                 </div>
 
             </div>
-            <!--START 5-day forecast content section-->
             <div id ="fiveDay">
                 <h3>5-Day Forecast</h3>
                 <!--Blocks for five day weather forecast will go here-->
@@ -75,6 +79,9 @@
 
                 </div>
             </div>
+
+            <!--START 5-day forecast content section-->
+
         </section>
         <!--END Main body content for displaying weather-->
     </div>
