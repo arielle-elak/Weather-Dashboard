@@ -45,21 +45,24 @@
 
         <!--START Main body content for displaying weather-->
         <section id="mainBody" class="col-12 col-md-9 col-lg-9">
-            <div id ="oneDay">
-                <div class="row">
-                    <h2 id="weather-search-term"></h2>
-                    <img id ="wicon" src=""/>
+            <div id ="oneDay" class = "row">
+                <div class = "col-12 col-md-4 col-lg-4">
+                    <h2 id="weather-search-term">Denver</h2>
+                    <p id ="conditions">Current Conditions: Cloudy</p>
+                    <img id ="wicon" src="http://openweathermap.org/img/w/10n.png"/>
                 </div>
-                <div id ="weatherInfo" class="row">
+                <!--Weather info for the selected city will go here-->
+                <ul id ="weatherList" class = "col-6 col-md-2 col-lg-2">
+                    <li>Temp: </li>
+                    <li>Temp: </li>
+                    <li>Temp: </li>
+                </ul>
 
-                    <!--Weather info for the selected city will go here-->
-                    <ul id ="weatherList">
-
-                    </ul>
-
-                    <ul id ="weatherData">
-
-                    </ul>
+                <ul id ="weatherData" class = "col-6 col-md-2 col-lg-2">
+                    <li>45</li>
+                    <li>45</li>
+                    <li>45</li>
+                </ul>
 
                 </div>
 

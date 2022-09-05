@@ -84,7 +84,7 @@ var displayWeather = function (data, searchTerm) {
     // Generate the content for the one day forecast section
     weatherSearchTerm.text(data.name);
     $("#wicon").attr("src", 'http://openweathermap.org/img/w/' + data.weather[0].icon + '.png');
-
+    $("#conditions").text('Current Conditions: ' + data.weather[0].description);
 
     $("#weatherList").append('<li>' + "Temperature:" + '</li>');
     $("#weatherList").append('<li>' + "Humidity:" + '</li>');
@@ -93,7 +93,6 @@ var displayWeather = function (data, searchTerm) {
     $("#weatherData").append('<li>' + (Math.round(data.main.temp)) + " " + "°F" + '</li>');
     $("#weatherData").append('<li>' + data.main.humidity + " " + "%" + '</li>');
     $("#weatherData").append('<li>' + data.wind.speed + " " + "mph" + '</li>');
-    debugger;
 };
 
 /**
