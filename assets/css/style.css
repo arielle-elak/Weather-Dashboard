@@ -40,6 +40,12 @@ header {
     padding: 2rem;
 }
 
+#weatherInfo {
+    display: flex;
+    flex-direction: row;
+    column-gap: 2rem;
+};
+
 #fiveDay {
     padding: .5rem;
     margin: 1rem;

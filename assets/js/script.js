@@ -83,8 +83,19 @@ var getWeather = function (city) {
 var displayWeather = function (data, searchTerm) {
     // Generate the content for the one day forecast section
     weatherSearchTerm.text(data.name);
-    $("#weatherList").append('<li></li>').text(data.main.temp + " " + "degrees F");
+    $("#weatherList").append('<li>' + "Temperature:   " + (Math.round(data.main.temp)) + " " + "°F" + '</li>');
+    $("#weatherList").append('<li>' + "Humidity:   " + data.main.humidity + " " + "%" + '</li>');
+    $("#weatherList").append('<li>' + "Wind Speed:   " + data.wind.speed + " " + "mph" + '</li>');
 };
+
+/**
+ * Stuff I wanna grab from the API:
+
+ * Basic Description: data.weather[0].description
+
+ * Icon: data.weather[0].icon
+ */
+
 
 // Input handler for when submit button is pressed
 // Sends the click event up to weatherInputHandler
@@ -159,14 +170,3 @@ submitBtn.click(function(event){
 // !TODO: Restrict the number of values in recent searches to 10 items (index of 9)
 
 // !TODO: When index is reached, delete the index 9 item
-
-
-
-/**
- * Stuff I wanna grab from the API:
- * Temperature: data.main.temp (degrees F)
- * Humidity: data.main.humidity (+  %)
- * Basic Description: data.weather[0].description
- * Wind Speed: data.weather[0].wind.speed (+ MPH)
- * Icon: data.weather[0].icon
- */
