@@ -83,9 +83,17 @@ var getWeather = function (city) {
 var displayWeather = function (data, searchTerm) {
     // Generate the content for the one day forecast section
     weatherSearchTerm.text(data.name);
-    $("#weatherList").append('<li>' + "Temperature:   " + (Math.round(data.main.temp)) + " " + "°F" + '</li>');
-    $("#weatherList").append('<li>' + "Humidity:   " + data.main.humidity + " " + "%" + '</li>');
-    $("#weatherList").append('<li>' + "Wind Speed:   " + data.wind.speed + " " + "mph" + '</li>');
+    $("#wicon").attr("src", 'http://openweathermap.org/img/w/' + data.weather[0].icon + '.png');
+
+
+    $("#weatherList").append('<li>' + "Temperature:" + '</li>');
+    $("#weatherList").append('<li>' + "Humidity:" + '</li>');
+    $("#weatherList").append('<li>' + "Wind Speed:" + '</li>');
+
+    $("#weatherData").append('<li>' + (Math.round(data.main.temp)) + " " + "°F" + '</li>');
+    $("#weatherData").append('<li>' + data.main.humidity + " " + "%" + '</li>');
+    $("#weatherData").append('<li>' + data.wind.speed + " " + "mph" + '</li>');
+    debugger;
 };
 
 /**

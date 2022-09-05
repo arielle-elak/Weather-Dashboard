@@ -33,22 +33,11 @@ header {
 }
 
 
-#oneDay {
+#oneDay, #fiveDay {
     border: 1px solid black;
     padding: .5rem;
     margin: 1rem;
     padding: 2rem;
-}
-
-#weatherInfo {
-    display: flex;
-    flex-direction: row;
-    column-gap: 2rem;
-};
-
-#fiveDay {
-    padding: .5rem;
-    margin: 1rem;
 }
 
 #weatherBlocks {
