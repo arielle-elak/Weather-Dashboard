@@ -11,7 +11,7 @@ var cityInput = $('#textBox');
 var oneDayWeatherEl = $('#oneDay');
 var fiveDayWeatherEl = $('#fiveDay');
 var weatherSearchTerm = $('#weatherSearchTerm');
-
+var weatherBlocks = $('#weatherBlocks');
 var weatherSearchTerm = $('#weather-search-term');
 
 // Handles what happens when input is typed into the city input area, and the submit button (event) takes place
@@ -26,7 +26,7 @@ var weatherInputHandler = function (event) {
     if (city) {
         getWeather(city);
         weatherSearchTerm.text('');
-        fiveDayWeatherEl.text('');
+        weatherBlocks.text('');
         cityInput.text('');
     } else {
         console.log("No city input");
@@ -40,9 +40,10 @@ var previousCityHander = function (event) {
 
      // If there is no city read from the button, don't attempt to fetch the weather info
      if (prevCity) {
-       getWeather(prevCity);
-         oneDayWeatherEl.textContent = '';
-         fiveDayWeatherEl.textContent = '';
+        getWeather(prevCity);
+        weatherSearchTerm.text('');
+        weatherBlocks.text('');
+        cityInput.text('');
     }
 };
 
@@ -77,10 +78,12 @@ var getWeather = function (city) {
 };
 
 
-
-var displayWeather = function (data, city) {
-    weatherSearchTerm.text(city);
-    debugger;
+// Start displaying the collected information on the page given the data retrieved previously
+// We need to switch away from "city" since it might become a parameter
+var displayWeather = function (data, searchTerm) {
+    // Generate the content for the one day forecast section
+    weatherSearchTerm.text(data.name);
+    $("#weatherList").append('<li></li>').text(data.main.temp + " " + "degrees F");
 };
 
 // Input handler for when submit button is pressed
@@ -89,7 +92,39 @@ submitBtn.click(function(event){
     weatherInputHandler(event);
 });
 
+/**
+ * BLOCK LAYOUT FOR ONE DAY FORECAST
 
+    <div id ="oneDay">
+        <div id ="cityDate">
+            <h2 id="weather-search-term"></h2>
+            <!--Title of city and current date will go here-->
+        </div>
+        <div id ="weatherInfo">
+            <!--Weather info for the selected city will go here-->
+            <ul>
+                <li>Temperature: </li>
+                <li>Wind Speed: </li>
+                <li>Humidity: </li>
+            </ul>
+        </div>
+    </div>
+*/
+
+/**
+ * BLOCK LAYOUT FOR FIVE DAY FORECAST BLOCKS
+
+    <div class="dayBlock col-12 col-sm-12 col-md-12 col-lg-2">
+        <h4>Wed</h4>
+        <h5>Sept 4 2022</h5>
+        <i class="fa-duotone fa-sun-cloud"></i>
+        <ul>
+            <li>Temp:</li>
+            <li>Wind:</li>
+            <li>Humidity:</li>
+        </ul>
+    </div>
+*/
 
 
 
