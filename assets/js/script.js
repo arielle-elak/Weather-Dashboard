@@ -5,7 +5,7 @@
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-var apiKey = 'dea2c2776d8164b3f477e18601a99e35';
+
 var submitBtn = $('#submitBtn');
 var cityInput = $('#textBox');
 var oneDayWeatherEl = $('#oneDay');
@@ -13,6 +13,8 @@ var fiveDayWeatherEl = $('#fiveDay');
 var weatherSearchTerm = $('#weatherSearchTerm');
 var weatherBlocks = $('#weatherBlocks');
 var weatherSearchTerm = $('#weather-search-term');
+var weatherList = $('#weatherList');
+var weatherData = $('#weatherData');
 
 // Handles what happens when input is typed into the city input area, and the submit button (event) takes place
 // Prevent default for unwanted behavior
@@ -25,6 +27,8 @@ var weatherInputHandler = function (event) {
     console.log(city);
     if (city) {
         getWeather(city);
+        weatherData.text('');
+        weatherList.text('');
         weatherSearchTerm.text('');
         weatherBlocks.text('');
         cityInput.text('');
@@ -58,8 +62,8 @@ var previousCityHander = function (event) {
 
 var getWeather = function (city) {
 
-    var apiUrl = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&units=imperial&appid=dea2c2776d8164b3f477e18601a99e35';
-    fetch(apiUrl)
+    var currentAPI = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&units=imperial&appid=dea2c2776d8164b3f477e18601a99e35';
+    fetch(currentAPI)
         .then(function (response) {
             if (response.ok) {
                 console.log(response);
@@ -80,28 +84,51 @@ var getWeather = function (city) {
 
 // Start displaying the collected information on the page given the data retrieved previously
 // We need to switch away from "city" since it might become a parameter
-var displayWeather = function (data, searchTerm) {
+var displayWeather = function (data, city) {
     // Generate the content for the one day forecast section
     weatherSearchTerm.text(data.name);
     $("#wicon").attr("src", 'http://openweathermap.org/img/w/' + data.weather[0].icon + '.png');
     $("#conditions").text('Current Conditions: ' + data.weather[0].description);
 
-    $("#weatherList").append('<li>' + "Temperature:" + '</li>');
+    $("#weatherList").append('<li>' + "Temp:" + '</li>');
     $("#weatherList").append('<li>' + "Humidity:" + '</li>');
     $("#weatherList").append('<li>' + "Wind Speed:" + '</li>');
 
     $("#weatherData").append('<li>' + (Math.round(data.main.temp)) + " " + "°F" + '</li>');
     $("#weatherData").append('<li>' + data.main.humidity + " " + "%" + '</li>');
     $("#weatherData").append('<li>' + data.wind.speed + " " + "mph" + '</li>');
+
+    getForecast(city);
 };
 
-/**
- * Stuff I wanna grab from the API:
+// Generate the content for the five day forecast
+// Specify for imperial units and only the next 5 days
 
- * Basic Description: data.weather[0].description
+var getForecast = function (city) {
+    console.log("Forecast for " + city);
+    var forecastAPI = 'https://api.openweathermap.org/data/2.5/forecast?q=' + city + '&units=imperial&cnt=5&appid=dea2c2776d8164b3f477e18601a99e35';
+    fetch(forecastAPI)
+    .then(function (response) {
+        if (response.ok) {
+            console.log(response);
+            response.json().then(function (data) {
+                console.log(data);
+                // Pushes the data and city values to the displayWeather function to be used as
+                displayForecast(data, city);
+            });
+        } else {
+            console.log('Error:' + response.statusText);
+        }
+    })
+    .catch(function (error) {
+        console.log('Unable to connect to Open Weather API');
+    });
+};
 
- * Icon: data.weather[0].icon
- */
+var displayForecast = function (data, city) {
+    console.log(data);
+}
+
 
 
 // Input handler for when submit button is pressed
@@ -110,24 +137,7 @@ submitBtn.click(function(event){
     weatherInputHandler(event);
 });
 
-/**
- * BLOCK LAYOUT FOR ONE DAY FORECAST
 
-    <div id ="oneDay">
-        <div id ="cityDate">
-            <h2 id="weather-search-term"></h2>
-            <!--Title of city and current date will go here-->
-        </div>
-        <div id ="weatherInfo">
-            <!--Weather info for the selected city will go here-->
-            <ul>
-                <li>Temperature: </li>
-                <li>Wind Speed: </li>
-                <li>Humidity: </li>
-            </ul>
-        </div>
-    </div>
-*/
 
 /**
  * BLOCK LAYOUT FOR FIVE DAY FORECAST BLOCKS
