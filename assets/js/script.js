@@ -106,7 +106,7 @@ var displayWeather = function (data, city) {
 
 var getForecast = function (city) {
     console.log("Forecast for " + city);
-    var forecastAPI = 'https://api.openweathermap.org/data/2.5/forecast?q=' + city + '&cnt=&units=imperial&appid=435fcbf53b60753e425fe48c7b6d8c16';
+    var forecastAPI = 'https://api.openweathermap.org/data/2.5/forecast?q=' + city + '&units=imperial&appid=435fcbf53b60753e425fe48c7b6d8c16';
     fetch(forecastAPI)
     .then(function (response) {
         if (response.ok) {
@@ -116,6 +116,7 @@ var getForecast = function (city) {
                 // Pushes the data and city values to the displayForecast function to be used
                 displayForecast(data);
                 console.log("Gone to displayForecast");
+
             });
         } else {
             console.log('Error:' + response.statusText);
@@ -141,27 +142,21 @@ var displayForecast = function (data) {
        });
 
     console.log(forecastArr);
-    debugger;
-
     generateForecast(forecastArr);
 };
 
+var generateForecast = function (forecastArr) {
 
-    /**
-     * var generateForecast = function () {
+    $.each(forecastArr, function (i) {
+        var thisBlock = $('<div>')
+        thisBlock.addClass('dayBlock', 'col-12 col-sm-12 col-md-12 col-lg-2');
+        weatherBlocks.append(thisBlock);
+        thisBlock.append($('<h3>').text(forecastArr[i].dt_txt));
+    });
 
-        $.each(forecastArr, function (i) {
-
-            var thisBlock = $('<div>')
-            thisBlock.addClass('dayBlock', 'col-12 col-sm-12 col-md-12 col-lg-2');
-            weatherBlocks.append(thisBlock);
-
-            thisBlock.append($('<h3>').text(forecastArr[i].dt_txt));
-        });
-
-    };
 };
-*/
+
+
 
 /**
  * BLOCK LAYOUT FOR FIVE DAY FORECAST BLOCKS
