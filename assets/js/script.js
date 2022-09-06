@@ -69,7 +69,7 @@ var getWeather = function (city) {
                 console.log(response);
                 response.json().then(function (data) {
                     console.log(data);
-                    // Pushes the data and city values to the displayWeather function to be used as
+                    // Pushes the data and city values to the displayWeather function to be used
                     displayWeather(data, city);
                 });
             } else {
@@ -92,7 +92,7 @@ var displayWeather = function (data, city) {
 
     $("#weatherList").append('<li>' + "Temp:" + '</li>');
     $("#weatherList").append('<li>' + "Humidity:" + '</li>');
-    $("#weatherList").append('<li>' + "Wind Speed:" + '</li>');
+    $("#weatherList").append('<li>' + "Wind:" + '</li>');
 
     $("#weatherData").append('<li>' + (Math.round(data.main.temp)) + " " + "°F" + '</li>');
     $("#weatherData").append('<li>' + data.main.humidity + " " + "%" + '</li>');
@@ -113,7 +113,7 @@ var getForecast = function (city) {
             console.log(response);
             response.json().then(function (data) {
                 console.log(data);
-                // Pushes the data and city values to the displayWeather function to be used as
+                // Pushes the data and city values to the displayForecast function to be used
                 displayForecast(data, city);
             });
         } else {
@@ -125,19 +125,17 @@ var getForecast = function (city) {
     });
 };
 
+// Function to take the 5 day forecast data and display on the page
 var displayForecast = function (data, city) {
     console.log(data);
-}
+    $.each(data.list, function (i) {
+        var thisClass = "dayBlock" + i;
+        console.log(thisClass);
+        var thisBlock = $('<div>').addClass(thisClass, 'col-12 col-sm-12 col-md-12 col-lg-2');
+        weatherBlocks.append(thisBlock);
+    });
 
-
-
-// Input handler for when submit button is pressed
-// Sends the click event up to weatherInputHandler
-submitBtn.click(function(event){
-    weatherInputHandler(event);
-});
-
-
+};
 
 /**
  * BLOCK LAYOUT FOR FIVE DAY FORECAST BLOCKS
@@ -155,24 +153,33 @@ submitBtn.click(function(event){
 */
 
 
+/** STUFF I NEED FROM THE FORECAST FETCH
+ *
+ * Date/parse day of week: data.list[i].dt_txt
+ * Temp: data.list[i].main.temp
+ * Wind: data.list[i].wind.speed
+ * Humidity: data.list[i].main.humidity
+ * Desciption: data.list[i].weather.description
+ * Icon: data.list[i].weather.icon
+ *
+ */
+
+
+
+// Input handler for when submit button is pressed
+// Sends the click event up to weatherInputHandler
+submitBtn.click(function(event){
+    weatherInputHandler(event);
+});
 
 
 
 
-// !TODO: Convert input into addition to URL string to make API equiry
+
+
 
 // !TODO: TRY to sanitise results
 
-
-/** !TODO: Parse API enquiry into values for
- * - Temperature
- * - Wind Speed
- * - Humidity
- *
- * For:
- * - Current day
- * - And next 5 days after current day
- */
 
 // !TODO: Append current day's data to the oneDay section
 
