@@ -106,7 +106,7 @@ var displayWeather = function (data, city) {
 
 var getForecast = function (city) {
     console.log("Forecast for " + city);
-    var forecastAPI = 'https://api.openweathermap.org/data/2.5/forecast?q=' + city + '&units=imperial&cnt=5&appid=dea2c2776d8164b3f477e18601a99e35';
+    var forecastAPI = 'https://api.openweathermap.org/data/2.5/forecast?q=' + city + '&cnt=40&units=imperial&appid=435fcbf53b60753e425fe48c7b6d8c16';
     fetch(forecastAPI)
     .then(function (response) {
         if (response.ok) {
@@ -129,10 +129,12 @@ var getForecast = function (city) {
 var displayForecast = function (data, city) {
     console.log(data);
     $.each(data.list, function (i) {
-        var thisClass = "dayBlock" + i;
-        console.log(thisClass);
-        var thisBlock = $('<div>').addClass(thisClass, 'col-12 col-sm-12 col-md-12 col-lg-2');
+
+        var thisBlock = $('<div>')
+        thisBlock.addClass('dayBlock', 'col-12 col-sm-12 col-md-12 col-lg-2');
         weatherBlocks.append(thisBlock);
+
+        thisBlock.append($('<h3>').text(data.list[i].dt_txt));
     });
 
 };
