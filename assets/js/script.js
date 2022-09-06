@@ -15,10 +15,14 @@ var weatherBlocks = $('#weatherBlocks');
 var weatherSearchTerm = $('#weather-search-term');
 var weatherList = $('#weatherList');
 var weatherData = $('#weatherData');
+var citiesHistory = $('#citiesHistory');
+var prevBtn = $('.button-cities');
+
 
 // Handles what happens when input is typed into the city input area, and the submit button (event) takes place
 // Prevent default for unwanted behavior
 // Clear out the existing text content before putting more in
+
 
 // Click handler for submit button
 var weatherInputHandler = function (event) {
@@ -38,18 +42,7 @@ var weatherInputHandler = function (event) {
     }
 };
 
-var previousCityHander = function (event) {
-     // `event.target` is a reference to the DOM element of the city button that is clicked
-     var prevCity = event.target.getAttribute('cities');
 
-     // If there is no city read from the button, don't attempt to fetch the weather info
-     if (prevCity) {
-        getWeather(prevCity);
-        weatherSearchTerm.text('');
-        weatherBlocks.text('');
-        cityInput.text('');
-    }
-};
 
 /**
  * Function retrieves data from open weather API based on the city that is provided by the user
@@ -61,7 +54,6 @@ var previousCityHander = function (event) {
 */
 
 var getWeather = function (city) {
-
     var currentAPI = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&units=imperial&appid=dea2c2776d8164b3f477e18601a99e35';
     fetch(currentAPI)
         .then(function (response) {
@@ -71,6 +63,7 @@ var getWeather = function (city) {
                     console.log(data);
                     // Pushes the data and city values to the displayWeather function to be used
                     displayWeather(data, city);
+                    checkPrevCity(city);
                 });
             } else {
                 console.log('Error:' + response.statusText);
@@ -81,22 +74,66 @@ var getWeather = function (city) {
         });
 };
 
+// Check to see if the city already exists
+// TODO: Restrict total number of entries to 10
+var checkPrevCity = function (city) {
+    citiesHistory.text('');
+    console.log("Checking " + city);
+    var previousCitiesArr = JSON.parse(localStorage.getItem("previousCities")) || [];
+    if (localStorage.getItem('previousCities') !== null) {
+        console.log(`Current cities exist`);
+        previousCitiesArr = JSON.parse(localStorage.getItem('previousCities'));
+        // Check if the current city exists already in local storage
+        // Else add the new city to the array and set the new array to local storage
+        if (previousCitiesArr.includes(city)) {
+            console.log('City exists');
+        } else {
+            console.log('City is not found');
+            previousCitiesArr.push(city);
+            localStorage.setItem("previousCities", JSON.stringify(previousCitiesArr));
+        };
+      } else {
+        console.log(`Cities storage not found. Creating object from initial`);
+        previousCitiesArr = [];
+        previousCitiesArr.push(city);
+        localStorage.setItem("previousCities", JSON.stringify(previousCitiesArr));
+    }; // END if
+    postPreviousCities(previousCitiesArr);
+};
+
+var postPreviousCities = function (previousCitiesArr) {
+
+    $.each(previousCitiesArr, function (i) {
+        previousCitiesArr = JSON.parse(localStorage.getItem('previousCities'));
+        citiesHistory.append($('<button>').text(previousCitiesArr[i]).attr('id', previousCitiesArr[i]).addClass('button-cities col-12'));
+    });
+};
 
 // Start displaying the collected information on the page given the data retrieved previously
 // We need to switch away from "city" since it might become a parameter
 var displayWeather = function (data, city) {
     // Generate the content for the one day forecast section
     weatherSearchTerm.text(data.name);
-    $("#wicon").attr("src", 'http://openweathermap.org/img/w/' + data.weather[0].icon + '.png');
-    $("#conditions").text('Current Conditions: ' + data.weather[0].description);
 
-    $("#weatherList").append('<li>' + "Temp:" + '</li>');
-    $("#weatherList").append('<li>' + "Humidity:" + '</li>');
-    $("#weatherList").append('<li>' + "Wind:" + '</li>');
+    $("#conditions")
+        .text('Current Conditions: ' + data.weather[0].description);
 
-    $("#weatherData").append('<li>' + (Math.round(data.main.temp)) + " " + "°F" + '</li>');
-    $("#weatherData").append('<li>' + data.main.humidity + " " + "%" + '</li>');
-    $("#weatherData").append('<li>' + data.wind.speed + " " + "mph" + '</li>');
+     $("#wicon")
+        .attr("src", 'http://openweathermap.org/img/w/' + data.weather[0].icon + '.png');
+
+    $("#weatherList")
+        .append('<li>' + "Temp:" + '</li>');
+    $("#weatherList")
+        .append('<li>' + "Humidity:" + '</li>');
+    $("#weatherList")
+        .append('<li>' + "Wind:" + '</li>');
+
+    $("#weatherData")
+        .append('<li>' + (Math.round(data.main.temp)) + " " + "°F" + '</li>');
+    $("#weatherData")
+        .append('<li>' + data.main.humidity + " " + "%" + '</li>');
+    $("#weatherData")
+        .append('<li>' + data.wind.speed + " " + "mph" + '</li>');
 
     getForecast(city);
 };
@@ -106,28 +143,28 @@ var displayWeather = function (data, city) {
 
 var getForecast = function (city) {
     console.log("Forecast for " + city);
-    var forecastAPI = 'https://api.openweathermap.org/data/2.5/forecast?q=' + city + '&units=imperial&appid=435fcbf53b60753e425fe48c7b6d8c16';
-    fetch(forecastAPI)
-    .then(function (response) {
-        if (response.ok) {
-            console.log(response);
-            response.json().then(function (data) {
-                console.log(data);
-                // Pushes the data and city values to the displayForecast function to be used
-                displayForecast(data, city);
-                console.log("Gone to displayForecast");
+    var forecastAPI = 'https://api.openweathermap.org/data/2.5/forecast?q='
+        + city + '&units=imperial&appid=435fcbf53b60753e425fe48c7b6d8c16';
 
-            });
-        } else {
-            console.log('Error:' + response.statusText);
-        }
-    })
+    fetch(forecastAPI)
+        .then(function (response) {
+            if (response.ok) {
+                console.log(response);
+                response.json().then(function (data) {
+                    console.log(data);
+                    // Pushes the data and city values to the displayForecast function to be used
+                    displayForecast(data, city);
+                    console.log("Gone to displayForecast");
+
+                });
+            } else {
+                console.log('Error:' + response.statusText);
+            }
+        })
     .catch(function (error) {
         console.log('Unable to connect to Open Weather API');
     });
 };
-
-
 
 
 // Function to take the 5 day forecast data and display on the page
@@ -146,28 +183,38 @@ var displayForecast = function (data, city) {
 };
 
 var generateForecast = function (forecastArr, city) {
-    fiveDayWeatherEl.children("h2").text("5 Day Forcast for " + city);
+    fiveDayWeatherEl
+        .children("h2")
+        .text("5 Day Forecast for " + city)
+        .attr('style', 'margin-top:2rem');
 
     $.each(forecastArr, function (i) {
+
+        // Create the weather block
         var thisBlock = $('<div>');
-        thisBlock.addClass('dayBlock col-12 col-sm-12 col-md-2 col-lg-2');
+        thisBlock.addClass('dayBlock col-12 col-sm-12 col-md-12 col-lg-2');
         weatherBlocks.append(thisBlock);
 
+        // Convert the display date into a day of the week using a weekArr array index value
         var dateConv = new Date(forecastArr[i].dt_txt);
         var dayOW = dateConv.getDay();
-        var weekArr = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-        thisBlock.append('<h3>' + weekArr[dayOW] + '</h3>');
+        var weekArr = ["SUN", "MON", "TUES", "WED", "THUR", "FRI", "SAT"];
 
+        // Append the day of week data to the new dateBlock div
+        thisBlock.append('<h4>' + weekArr[dayOW] + '</h4>');
 
+        // Convert the date to just show the month and date
         var dateFull = (forecastArr[i].dt_txt);
         var date = moment(dateFull, "YYYY-MM-DD HH:mm:ss").format("MMM, DD");
-        var dateEl = $('<h4>').text(date);
+        var dateEl =$('<b><p>').text(date);
         thisBlock.append(dateEl);
 
-       $('<img>').attr("src", 'http://openweathermap.org/img/w/' + forecastArr[i].weather[0].icon + '.png');
+        // Add weather icon
+        thisBlock.append($('<img>').attr("src", 'http://openweathermap.org/img/w/' + forecastArr[i].weather[0].icon + '.png'));
+
 
         var weatherList = $('<ul>');
-        thisBlock.append(weatherList).addClass('weatherUl');
+        thisBlock.append(weatherList);
 
         weatherList.append('<li>Temp: ' + (Math.round(forecastArr[i].main.temp)) + ' ' + '°F');
         weatherList.append('<li>Humidity: ' + forecastArr[i].main.humidity + ' ' + '%');
@@ -176,38 +223,12 @@ var generateForecast = function (forecastArr, city) {
 
 };
 
+// Can't get the previous cities buttones to work...
+$("<button>").click(function() {
+    console.log(this.id);
+});
 
 
-/**
- * BLOCK LAYOUT FOR FIVE DAY FORECAST BLOCKS
-
-    <div class="dayBlock col-12 col-sm-12 col-md-12 col-lg-2">
-        <h4>Wed</h4>
-        <h5>Sept 4 2022</h5>
-        <i class="fa-duotone fa-sun-cloud"></i>
-        <ul>
-            <li>Temp:</li>
-            <li>Wind:</li>
-            <li>Humidity:</li>
-        </ul>
-    </div>
-*/
-
-
-/** STUFF I NEED FROM THE FORECAST FETCH
- *
- * Date/parse day of week: data.list[i].dt_txt
- * Temp: data.list[i].main.temp
- * Wind: data.list[i].wind.speed
- * Humidity: data.list[i].main.humidity
- * Desciption: data.list[i].weather.description
- * Icon: data.list[i].weather.icon
- *
- */
-
-
-
-// Input handler for when submit button is pressed
 // Sends the click event up to weatherInputHandler
 submitBtn.click(function(event){
     weatherInputHandler(event);
@@ -217,20 +238,6 @@ submitBtn.click(function(event){
 
 
 
-
-
-// !TODO: TRY to sanitise results
-
-
-// !TODO: Append current day's data to the oneDay section
-
-// !TODO: Append next 5 day's data to the fiveDay section
-
-// !TODO: Save last succesfully found city to local storage under recentSearches object
-
-// !TODO: Push latest value to the front of the object
-
-// !TODO: Generate the value as a button in the sidebar
 
 // !TODO: Restrict the number of values in recent searches to 10 items (index of 9)
 
