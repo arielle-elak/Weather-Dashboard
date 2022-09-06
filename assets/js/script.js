@@ -106,7 +106,7 @@ var displayWeather = function (data, city) {
 
 var getForecast = function (city) {
     console.log("Forecast for " + city);
-    var forecastAPI = 'https://api.openweathermap.org/data/2.5/forecast?q=' + city + '&cnt=40&units=imperial&appid=435fcbf53b60753e425fe48c7b6d8c16';
+    var forecastAPI = 'https://api.openweathermap.org/data/2.5/forecast?q=' + city + '&cnt=&units=imperial&appid=435fcbf53b60753e425fe48c7b6d8c16';
     fetch(forecastAPI)
     .then(function (response) {
         if (response.ok) {
@@ -114,7 +114,8 @@ var getForecast = function (city) {
             response.json().then(function (data) {
                 console.log(data);
                 // Pushes the data and city values to the displayForecast function to be used
-                displayForecast(data, city);
+                displayForecast(data);
+                console.log("Gone to displayForecast");
             });
         } else {
             console.log('Error:' + response.statusText);
@@ -125,19 +126,41 @@ var getForecast = function (city) {
     });
 };
 
+
+
+
 // Function to take the 5 day forecast data and display on the page
-var displayForecast = function (data, city) {
-    console.log(data);
-    $.each(data.list, function (i) {
+var displayForecast = function (data) {
+    var forDate = data.list;
+    console.log(forDate);
+    var forecastArr = [];
+       // $.each(forDate, function (i) {
+            if (forDate[2].dt_txt.includes("12:00:00")) {
+                forecastArr.push(forDate);
+                debugger;
+            }
+       // });
+    console.log(forecastArr);
 
-        var thisBlock = $('<div>')
-        thisBlock.addClass('dayBlock', 'col-12 col-sm-12 col-md-12 col-lg-2');
-        weatherBlocks.append(thisBlock);
-
-        thisBlock.append($('<h3>').text(data.list[i].dt_txt));
-    });
-
+    generateForecast(forecastArr);
 };
+
+
+    /**
+     * var generateForecast = function () {
+
+        $.each(forecastArr, function (i) {
+
+            var thisBlock = $('<div>')
+            thisBlock.addClass('dayBlock', 'col-12 col-sm-12 col-md-12 col-lg-2');
+            weatherBlocks.append(thisBlock);
+
+            thisBlock.append($('<h3>').text(forecastArr[i].dt_txt));
+        });
+
+    };
+};
+*/
 
 /**
  * BLOCK LAYOUT FOR FIVE DAY FORECAST BLOCKS
