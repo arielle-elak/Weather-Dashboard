@@ -25,7 +25,7 @@
     <div class="container-fluid">
         <div class="row">
         <!--START Sidebar content for initial search-->
-        <section id="sideBody" class="col-12 col-md-3 col-lg-3">
+        <section id="sideBody" class="col-12 col-md-3 col-lg-2">
             <div id = "searchBox">
                 <label for = "textBox">Search for a City: </label>
                 <input type="text" id = "textBox" name="textBox" autofocus="true">
@@ -45,10 +45,10 @@
         <!--END Sidebar content for initial search-->
 
         <!--START Main body content for displaying weather-->
-        <section id="mainBody" class="col-12 col-md-9 col-lg-9">
+        <section id="mainBody" class="col-12 col-md-9 col-lg-10">
             <div id ="oneDay" class="row">
 
-                <div class = "col-12 col-sm-6 col-md-6 col-lg-5 col-xl-5">
+                <div class = "col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
                     <img id ="wicon" src=""/>
                     <h2 id ="weather-search-term"></h2>
                     <p id ="conditions"></p>
@@ -56,12 +56,12 @@
                     <!--Weather info for the selected city will go here-->
                 </div>
 
-                <div class="col-6 col-sm-3 col-md-2 col-lg-2 col-xl-1">
+                <div class="col-6 col-sm-3 col-md-2 col-lg-2 col-xl-2">
                     <ul id ="weatherList">
                     </ul>
                 </div>
 
-                <div class="col-6 col-sm-3 col-md-2 col-lg-2 col-xl-1">
+                <div class="col-6 col-sm-3 col-md-3 col-lg-3 col-xl-2">
                     <ul id ="weatherData">
                     </ul>
                 </div>
@@ -70,7 +70,7 @@
             <div id ="fiveDay">
                 <h3>5-Day Forecast</h3>
                 <!--Blocks for five day weather forecast will go here-->
-                <div id="weatherBlocks">
+                <div id="weatherBlocks" class="row">
 
                 </div>
             </div>

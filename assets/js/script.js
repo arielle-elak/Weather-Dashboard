@@ -149,12 +149,18 @@ var generateForecast = function (forecastArr) {
 
     $.each(forecastArr, function (i) {
         var thisBlock = $('<div>')
-        thisBlock.addClass('dayBlock', 'col-12 col-sm-12 col-md-12 col-lg-2');
+        thisBlock.addClass('dayBlock col-12 col-sm-12 col-md-2 col-lg-2');
         weatherBlocks.append(thisBlock);
+
         var dateConv = new Date(forecastArr[i].dt_txt);
         var dayOW = dateConv.getDay();
         var weekArr = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-        thisBlock.append($('<h3>').text(weekArr[dayOW]));
+        thisBlock.append($('<b><p>').text(weekArr[dayOW]))
+
+        var dateEl = $('<p>');
+        var dateFull = (forecastArr[i].dt_txt);
+        var date = moment(dateFull, "YYYY-MM-DD HH:mm:ss").format("MMM, DD");
+        console.log(date);
     });
 
 };
