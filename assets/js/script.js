@@ -134,13 +134,14 @@ var displayForecast = function (data) {
     var forDate = data.list;
     console.log(forDate);
     var forecastArr = [];
-       // $.each(forDate, function (i) {
-            if (forDate[2].dt_txt.includes("12:00:00")) {
-                forecastArr.push(forDate[2]);
-                debugger;
+       $.each(forDate, function (i) {
+            if (forDate[i].dt_txt.includes("12:00:00")) {
+                forecastArr.push(forDate[i]);
             }
-       // });
+       });
+
     console.log(forecastArr);
+    debugger;
 
     generateForecast(forecastArr);
 };
