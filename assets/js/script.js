@@ -151,7 +151,10 @@ var generateForecast = function (forecastArr) {
         var thisBlock = $('<div>')
         thisBlock.addClass('dayBlock', 'col-12 col-sm-12 col-md-12 col-lg-2');
         weatherBlocks.append(thisBlock);
-        thisBlock.append($('<h3>').text(forecastArr[i].dt_txt));
+        var dateConv = new Date(forecastArr[i].dt_txt);
+        var dayOW = dateConv.getDay();
+        var weekArr = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        thisBlock.append($('<h3>').text(weekArr[dayOW]));
     });
 
 };
