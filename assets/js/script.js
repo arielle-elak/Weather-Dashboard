@@ -136,7 +136,7 @@ var displayForecast = function (data) {
     var forecastArr = [];
        // $.each(forDate, function (i) {
             if (forDate[2].dt_txt.includes("12:00:00")) {
-                forecastArr.push(forDate);
+                forecastArr.push(forDate[2]);
                 debugger;
             }
        // });
