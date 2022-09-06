@@ -114,7 +114,7 @@ var getForecast = function (city) {
             response.json().then(function (data) {
                 console.log(data);
                 // Pushes the data and city values to the displayForecast function to be used
-                displayForecast(data);
+                displayForecast(data, city);
                 console.log("Gone to displayForecast");
 
             });
@@ -131,7 +131,7 @@ var getForecast = function (city) {
 
 
 // Function to take the 5 day forecast data and display on the page
-var displayForecast = function (data) {
+var displayForecast = function (data, city) {
     var forDate = data.list;
     console.log(forDate);
     var forecastArr = [];
@@ -142,25 +142,36 @@ var displayForecast = function (data) {
        });
 
     console.log(forecastArr);
-    generateForecast(forecastArr);
+    generateForecast(forecastArr, city);
 };
 
-var generateForecast = function (forecastArr) {
+var generateForecast = function (forecastArr, city) {
+    fiveDayWeatherEl.children("h2").text("5 Day Forcast for " + city);
 
     $.each(forecastArr, function (i) {
-        var thisBlock = $('<div>')
+        var thisBlock = $('<div>');
         thisBlock.addClass('dayBlock col-12 col-sm-12 col-md-2 col-lg-2');
         weatherBlocks.append(thisBlock);
 
         var dateConv = new Date(forecastArr[i].dt_txt);
         var dayOW = dateConv.getDay();
         var weekArr = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-        thisBlock.append($('<b><p>').text(weekArr[dayOW]))
+        thisBlock.append('<h3>' + weekArr[dayOW] + '</h3>');
 
-        var dateEl = $('<p>');
+
         var dateFull = (forecastArr[i].dt_txt);
         var date = moment(dateFull, "YYYY-MM-DD HH:mm:ss").format("MMM, DD");
-        console.log(date);
+        var dateEl = $('<h4>').text(date);
+        thisBlock.append(dateEl);
+
+       $('<img>').attr("src", 'http://openweathermap.org/img/w/' + forecastArr[i].weather[0].icon + '.png');
+
+        var weatherList = $('<ul>');
+        thisBlock.append(weatherList).addClass('weatherUl');
+
+        weatherList.append('<li>Temp: ' + (Math.round(forecastArr[i].main.temp)) + ' ' + '°F');
+        weatherList.append('<li>Humidity: ' + forecastArr[i].main.humidity + ' ' + '%');
+        weatherList.append('<li>Wind: ' + forecastArr[i].wind.speed + ' ' + 'mph');
     });
 
 };
