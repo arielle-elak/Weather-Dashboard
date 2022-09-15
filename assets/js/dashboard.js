@@ -28,7 +28,10 @@ var prevBtn = $('.button-cities');
 // Click handler for submit button
 var weatherInputHandler = function (event) {
     event.preventDefault();
-    var city = $.trim(cityInput.val());
+    var toPascalCase = str =>
+        str.replace(/\w\S*/g, m => m.charAt(0).toUpperCase()
+            + m.substr(1).toLowerCase());
+    var city = toPascalCase($.trim(cityInput.val()));
     console.log(city);
     if (city) {
         localStorage.setItem("currentCity", JSON.stringify(city));
@@ -262,8 +265,9 @@ function checkFirstCity() {
 
 // Delegated on click binding will seek out all generated elements with the same class, and apply the same event
 $("#citiesHistory").on("click", "button", function () {
-    console.log(this.id);
-    getWeather(this.id);
+
+    console.log(toPascalCase(this.id));
+    getWeather(toPascalCase(this.id));
 
 });
 
