@@ -1,7 +1,7 @@
 /*
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * Weather Dashboard CSS
- * Last Edited by Arielle Sept 4 2022
+ * Last Edited by Arielle Sept 14 2022
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
@@ -20,6 +20,10 @@ header {
 
 }
 
+h6 {
+    text-align: center;
+}
+
 #sideBody {
     display: flex;
     flex-direction: column;
@@ -29,6 +33,7 @@ header {
 #searchBox, #citiesHistory {
     margin: 1rem;
     text-align: center;
+    width: 100%;
 }
 
 #textBox, #submitBtn, .cities {
