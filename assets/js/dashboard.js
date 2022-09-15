@@ -233,6 +233,7 @@ var generateForecast = function (forecastArr, city) {
 
 // When the page first loads, checks to see if this is a return user
 // If there's no data in previousCities, then pull the city variable from firstCity
+// Also detects if user has not inputed a city before and redirects them to index
 
 function checkFirstCity() {
 
@@ -243,12 +244,16 @@ function checkFirstCity() {
     var prevCityCheck = JSON.parse(localStorage.getItem('previousCities'));
     console.log("Previous cities: " + prevCityCheck);
 
+    if (firstCity === null && currentCity === null && prevCityCheck === null) {
+        console.log("First time! Back to home.")
+        window.location.replace("/index.html");
+    }
 
     if (firstCity !== null) {
         if (currentCity !== null) {
             console.log("Retrieving weather for your current city: " + currentCity)
             getWeather(currentCity);
-        } else if (currentCity == null) {
+        } else if (currentCity === null) {
             console.log("Retrieving weather for your first city: " + firstCity)
             getWeather(firstCity);
         };
