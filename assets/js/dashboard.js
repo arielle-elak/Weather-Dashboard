@@ -244,8 +244,9 @@ function checkFirstCity() {
 
     var firstCity = JSON.parse(localStorage.getItem('firstCity'));
     console.log("First city: " + firstCity);
-    JSON.parse(localStorage.getItem('currentCity'));
-    console.log("Current city: " + currentCity);
+
+    var currCity = JSON.parse(localStorage.getItem('currentCity'));
+
     var prevCityCheck = JSON.parse(localStorage.getItem('previousCities'));
     console.log("Previous cities: " + prevCityCheck);
 
@@ -255,10 +256,10 @@ function checkFirstCity() {
     }
 
     if (firstCity !== null) {
-        if (currentCity !== null) {
-            console.log("Retrieving weather for your current city: " + currentCity)
-            getWeather(currentCity);
-        } else if (currentCity === null) {
+        if (currCity !== null) {
+            console.log("Retrieving weather for your current city: " + currCity)
+            getWeather(currCity);
+        } else if (currCity === null) {
             console.log("Retrieving weather for your first city: " + firstCity)
             getWeather(firstCity);
         };
