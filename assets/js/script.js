@@ -31,7 +31,11 @@ function checkStorage() {
  */
 var homeInputHandler = function (event) {
     event.preventDefault();
-    var city = $.trim(cityInput.val());
+    var userCity = $.trim(cityInput.val());
+    var toPascalCase = str =>
+        str.replace(/\w\S*/g, m => m.charAt(0).toUpperCase()
+            + m.substr(1).toLowerCase());
+    var city = toPascalCase(userCity);
     console.log(city);
     if (city) {
         localStorage.setItem("firstCity", JSON.stringify(city));
