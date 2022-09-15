@@ -19,11 +19,22 @@ var citiesHistory = $('#citiesHistory');
 var prevBtn = $('.button-cities');
 
 
+// When the page first loads, checks to see if this is a return user
+// If there's no data in previousCities, then pull the city variable from firstCity
+$(document).ready(function () {
+    console.log("Dashboard loaded");
+    if (localStorage.getItem('previousCities') === null) {
+        var city = JSON.parse(localStorage.getItem('firstCity'));
+        console.log("Retrieving weather for your first city: " + city)
+        getWeather(city);
+    }
+});
+
+
+
 // Handles what happens when input is typed into the city input area, and the submit button (event) takes place
 // Prevent default for unwanted behavior
 // Clear out the existing text content before putting more in
-
-
 // Click handler for submit button
 var weatherInputHandler = function (event) {
     event.preventDefault();
