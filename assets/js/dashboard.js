@@ -22,13 +22,6 @@ var prevBtn = $('.button-cities');
 
 
 
-
-
-
-
-
-
-
 // Handles what happens when input is typed into the city input area, and the submit button (event) takes place
 // Prevent default for unwanted behavior
 // Clear out the existing text content before putting more in
@@ -38,7 +31,7 @@ var weatherInputHandler = function (event) {
     var city = $.trim(cityInput.val());
     console.log(city);
     if (city) {
-        sessionStorage.setItem("currentCity", JSON.stringify(city));
+        localStorage.setItem("currentCity", JSON.stringify(city));
         getWeather(city);
         weatherData.text('');
         weatherList.text('');
@@ -238,6 +231,30 @@ var generateForecast = function (forecastArr, city) {
 
 };
 
+// When the page first loads, checks to see if this is a return user
+// If there's no data in previousCities, then pull the city variable from firstCity
+
+function checkFirstCity() {
+
+    var firstCity = JSON.parse(localStorage.getItem('firstCity'));
+    console.log("First city: " + firstCity);
+    var currentCity = JSON.parse(localStorage.getItem('currentCity'));
+    console.log("Current city: " + currentCity);
+    var prevCityCheck = JSON.parse(localStorage.getItem('previousCities'));
+    console.log("Previous cities: " + prevCityCheck);
+
+
+    if (firstCity !== null) {
+        if (currentCity !== null) {
+            console.log("Retrieving weather for your current city: " + currentCity)
+            getWeather(currentCity);
+        } else if (currentCity == null) {
+            console.log("Retrieving weather for your first city: " + firstCity)
+            getWeather(firstCity);
+        };
+    };
+};
+
 // Delegated on click binding will seek out all generated elements with the same class, and apply the same event
 $("#citiesHistory").on("click", "button", function(){
     getWeather($(this).text);
@@ -250,34 +267,8 @@ submitBtn.click(function(event){
 });
 
 
-// When the page first loads, checks to see if this is a return user
-// If there's no data in previousCities, then pull the city variable from firstCity
 
-function checkFirstCity() {
-    var prevCityCheck = JSON.parse(localStorage.getItem('previousCities'));
-    console.log("Previous cities: " + prevCityCheck);
-    var currentCity = JSON.parse(sessionStorage.getItem('currentCity'));
-    console.log("Current city: " + currentCity);
-    var firstCity = JSON.parse(sessionStorage.getItem('firstCity'));
-    console.log("First city: " + firstCity);
-    if ((prevCityCheck && currentCity && firstCity) == null) {
-        console.log("Guess it's your first time!")
-    };
 
-    if (prevCityCheck) {
-        if (currentCity !== null) {
-            console.log("Retrieving weather for your current city: " + currentCity)
-            getWeather(currentCity);
-        } else {
-            if (firstCity !== null) {
-                console.log("Retrieving weather for your first city: " + firstCity)
-                getWeather(firstCity);
-            } else {
-                console.log("Guess it's your first time!")
-            };
-        };
-    };
-};
 
 /**
  *

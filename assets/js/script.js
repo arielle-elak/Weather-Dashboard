@@ -14,9 +14,10 @@ var cityInput = $('#textBox');
  * If so, immediately redirects them to the dashboard with their last searched city
  */
 function checkStorage() {
-    if (localStorage.getItem('previousCities') !== null) {
+    if (JSON.parse(localStorage.getItem('previousCities')) !== null) {
         console.log("Welcome back! Redirecting you.");
         window.location.replace("/dashboard.html");
+
     } else {
         console.log("Welcome, new user!");
     };
@@ -33,7 +34,7 @@ var homeInputHandler = function (event) {
     var city = $.trim(cityInput.val());
     console.log(city);
     if (city) {
-        sessionStorage.setItem("firstCity", JSON.stringify(city));
+        localStorage.setItem("firstCity", JSON.stringify(city));
         window.location.replace("/dashboard.html");
     } else {
         console.log("No city input yet");
