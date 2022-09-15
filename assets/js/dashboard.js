@@ -17,9 +17,12 @@ var weatherList = $('#weatherList');
 var weatherData = $('#weatherData');
 var citiesHistory = $('#citiesHistory');
 var prevBtn = $('.button-cities');
+var responseText = $('#responseText');
 
 
-
+var toPascalCase = str =>
+        str.replace(/\w\S*/g, m => m.charAt(0).toUpperCase()
+            + m.substr(1).toLowerCase());
 
 
 // Handles what happens when input is typed into the city input area, and the submit button (event) takes place
@@ -28,9 +31,6 @@ var prevBtn = $('.button-cities');
 // Click handler for submit button
 var weatherInputHandler = function (event) {
     event.preventDefault();
-    var toPascalCase = str =>
-        str.replace(/\w\S*/g, m => m.charAt(0).toUpperCase()
-            + m.substr(1).toLowerCase());
     var city = toPascalCase($.trim(cityInput.val()));
     console.log(city);
     if (city) {
@@ -54,24 +54,26 @@ var weatherInputHandler = function (event) {
 */
 
 var getWeather = function (city) {
-    weatherData.text('');
-    weatherList.text('');
-    weatherSearchTerm.text('');
-    weatherBlocks.text('');
-    cityInput.text('');
     var currentAPI = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&units=imperial&appid=dea2c2776d8164b3f477e18601a99e35';
     fetch(currentAPI)
         .then(function (response) {
             if (response.ok) {
                 console.log(response);
+                responseText.text("");
                 response.json().then(function (data) {
                     console.log(data);
+                    weatherData.text('');
+                    weatherList.text('');
+                    weatherSearchTerm.text('');
+                    weatherBlocks.text('');
+                    cityInput.text('');
                     // Pushes the data and city values to the displayWeather function to be used
                     displayWeather(data, city);
                     checkPrevCity(city);
                 });
-            } else {
+            } else if (response.status !== 200) {
                 console.log('Error:' + response.statusText);
+                responseText.text("Please enter a valid city.");
             }
         })
         .catch(function (error) {
@@ -242,7 +244,7 @@ function checkFirstCity() {
 
     var firstCity = JSON.parse(localStorage.getItem('firstCity'));
     console.log("First city: " + firstCity);
-    var currentCity = JSON.parse(localStorage.getItem('currentCity'));
+    JSON.parse(localStorage.getItem('currentCity'));
     console.log("Current city: " + currentCity);
     var prevCityCheck = JSON.parse(localStorage.getItem('previousCities'));
     console.log("Previous cities: " + prevCityCheck);
@@ -265,10 +267,9 @@ function checkFirstCity() {
 
 // Delegated on click binding will seek out all generated elements with the same class, and apply the same event
 $("#citiesHistory").on("click", "button", function () {
-
     console.log(toPascalCase(this.id));
     getWeather(toPascalCase(this.id));
-
+    localStorage.setItem("currentCity", JSON.stringify(this.id));
 });
 
 
@@ -276,19 +277,3 @@ $("#citiesHistory").on("click", "button", function () {
 submitBtn.click(function(event){
     weatherInputHandler(event);
 });
-
-
-
-
-
-/**
- *
- */
-
-
-
-
-
-// !TODO: Restrict the number of values in recent searches to 10 items (index of 9)
-
-// !TODO: When index is reached, delete the index 9 item
