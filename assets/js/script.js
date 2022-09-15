@@ -7,6 +7,7 @@
 
 var submitBtn = $('#submitBtn');
 var cityInput = $('#textBox');
+var responseText = $('#responseText');
 
 /**
  * On page load, detects whether user has been here before
@@ -37,14 +38,22 @@ var homeInputHandler = function (event) {
             + m.substr(1).toLowerCase());
     var city = toPascalCase(userCity);
     console.log(city);
-    if (city) {
-        localStorage.setItem("firstCity", JSON.stringify(city));
-        window.location.replace("/dashboard.html");
-    } else {
-        console.log("No city input yet");
-        return;
-    }
+    var currentAPI = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&units=imperial&appid=dea2c2776d8164b3f477e18601a99e35';
+    fetch(currentAPI)
+        .then(function (response) {
+            console.log(response.status);
+            //  Conditional for the the response.status.
+            if (response.status !== 200) {
+                // Place the response.status on the page.
+                responseText.text("Please enter a valid city.");
+            } else {
+                responseText.text("");
+                localStorage.setItem("firstCity", JSON.stringify(city));
+                window.location.replace("/dashboard.html");
+            }
+        });
 };
+
 
 
 // Sends the click event up to weatherInputHandler
