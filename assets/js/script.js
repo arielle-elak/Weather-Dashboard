@@ -88,8 +88,14 @@ var checkPrevCity = function (city) {
         if (previousCitiesArr.includes(city)) {
             console.log('City exists');
         } else {
-            console.log('City is not found');
-            previousCitiesArr.push(city);
+            console.log('City is not found - new city.');
+            previousCitiesArr.splice(0, 0, city);
+            var count = previousCitiesArr.length;
+            console.log("New array length: " + count);
+            if (count >= 10) {
+                previousCitiesArr.pop();
+                console.log("Last item removed. " + count);
+            }
             localStorage.setItem("previousCities", JSON.stringify(previousCitiesArr));
         };
       } else {
