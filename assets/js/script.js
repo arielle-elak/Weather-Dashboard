@@ -223,9 +223,9 @@ var generateForecast = function (forecastArr, city) {
 
 };
 
-// Can't get the previous cities buttones to work...
-$("<button>").click(function() {
-    console.log(this.id);
+// Delegated on click binding will seek out all generated elements with the same class, and apply the same event
+$("#citiesHistory").on("click", "button", function(){
+    getWeather($(this).text);
 });
 
 
