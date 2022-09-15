@@ -33,11 +33,6 @@ var weatherInputHandler = function (event) {
     if (city) {
         localStorage.setItem("currentCity", JSON.stringify(city));
         getWeather(city);
-        weatherData.text('');
-        weatherList.text('');
-        weatherSearchTerm.text('');
-        weatherBlocks.text('');
-        cityInput.text('');
     } else {
         console.log("No city input");
         return;
@@ -56,6 +51,11 @@ var weatherInputHandler = function (event) {
 */
 
 var getWeather = function (city) {
+    weatherData.text('');
+    weatherList.text('');
+    weatherSearchTerm.text('');
+    weatherBlocks.text('');
+    cityInput.text('');
     var currentAPI = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&units=imperial&appid=dea2c2776d8164b3f477e18601a99e35';
     fetch(currentAPI)
         .then(function (response) {
@@ -261,8 +261,10 @@ function checkFirstCity() {
 };
 
 // Delegated on click binding will seek out all generated elements with the same class, and apply the same event
-$("#citiesHistory").on("click", "button", function(){
-    getWeather($(this).text);
+$("#citiesHistory").on("click", "button", function () {
+    console.log(this.id);
+    getWeather(this.id);
+
 });
 
 
