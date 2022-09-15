@@ -19,16 +19,13 @@ var citiesHistory = $('#citiesHistory');
 var prevBtn = $('.button-cities');
 
 
-// When the page first loads, checks to see if this is a return user
-// If there's no data in previousCities, then pull the city variable from firstCity
-$(document).ready(function () {
-    console.log("Dashboard loaded");
-    if (localStorage.getItem('previousCities') === null) {
-        var city = JSON.parse(localStorage.getItem('firstCity'));
-        console.log("Retrieving weather for your first city: " + city)
-        getWeather(city);
-    }
-});
+
+
+
+
+
+
+
 
 
 
@@ -41,6 +38,7 @@ var weatherInputHandler = function (event) {
     var city = $.trim(cityInput.val());
     console.log(city);
     if (city) {
+        sessionStorage.setItem("currentCity", JSON.stringify(city));
         getWeather(city);
         weatherData.text('');
         weatherList.text('');
@@ -251,6 +249,39 @@ submitBtn.click(function(event){
     weatherInputHandler(event);
 });
 
+
+// When the page first loads, checks to see if this is a return user
+// If there's no data in previousCities, then pull the city variable from firstCity
+
+function checkFirstCity() {
+    var prevCityCheck = JSON.parse(localStorage.getItem('previousCities'));
+    console.log("Previous cities: " + prevCityCheck);
+    var currentCity = JSON.parse(sessionStorage.getItem('currentCity'));
+    console.log("Current city: " + currentCity);
+    var firstCity = JSON.parse(sessionStorage.getItem('firstCity'));
+    console.log("First city: " + firstCity);
+    if ((prevCityCheck && currentCity && firstCity) == null) {
+        console.log("Guess it's your first time!")
+    };
+
+    if (prevCityCheck) {
+        if (currentCity !== null) {
+            console.log("Retrieving weather for your current city: " + currentCity)
+            getWeather(currentCity);
+        } else {
+            if (firstCity !== null) {
+                console.log("Retrieving weather for your first city: " + firstCity)
+                getWeather(firstCity);
+            } else {
+                console.log("Guess it's your first time!")
+            };
+        };
+    };
+};
+
+/**
+ *
+ */
 
 
 

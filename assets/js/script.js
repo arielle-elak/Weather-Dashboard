@@ -15,7 +15,7 @@ var cityInput = $('#textBox');
  */
 function checkStorage() {
     if (localStorage.getItem('previousCities') !== null) {
-        console.log("Welcome back!");
+        console.log("Welcome back! Redirecting you.");
         window.location.replace("/dashboard.html");
     } else {
         console.log("Welcome, new user!");
@@ -33,10 +33,10 @@ var homeInputHandler = function (event) {
     var city = $.trim(cityInput.val());
     console.log(city);
     if (city) {
-        localStorage.setItem("firstCity", JSON.stringify(city));
+        sessionStorage.setItem("firstCity", JSON.stringify(city));
         window.location.replace("/dashboard.html");
     } else {
-        console.log("No city input yet.");
+        console.log("No city input yet");
         return;
     }
 };
