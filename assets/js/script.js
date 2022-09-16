@@ -49,7 +49,7 @@ var homeInputHandler = function (event) {
             } else {
                 responseText.text("");
                 localStorage.setItem("firstCity", JSON.stringify(city));
-                window.location.replace("/dashboard.html");
+                window.location.replace("Weather-Dashboard/dashboard.html");
             }
         });
 };
