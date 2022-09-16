@@ -118,7 +118,7 @@ var postPreviousCities = function (previousCitiesArr) {
 
     $.each(previousCitiesArr, function (i) {
         previousCitiesArr = JSON.parse(localStorage.getItem('previousCities'));
-        citiesHistory.append($('<button>').text(previousCitiesArr[i]).attr('id', previousCitiesArr[i]).addClass('button-cities col-12'));
+        citiesHistory.append($('<button>').text(previousCitiesArr[i]).attr('id', previousCitiesArr[i]).addClass('button-cities btn btn-info col-12'));
     });
 };
 
@@ -127,6 +127,8 @@ var postPreviousCities = function (previousCitiesArr) {
 var displayWeather = function (data, city) {
     // Generate the content for the one day forecast section
     weatherSearchTerm.text(data.name);
+    $("#todayDate")
+        .text(moment().format('LLLL'));
 
     $("#conditions")
         .text('Current Conditions: ' + data.weather[0].description);
@@ -197,7 +199,7 @@ var displayForecast = function (data, city) {
 
 var generateForecast = function (forecastArr, city) {
     fiveDayWeatherEl
-        .children("h2")
+        .children("h3")
         .text("5 Day Forecast for " + city)
         .attr('style', 'margin-top:2rem');
 
@@ -245,7 +247,7 @@ function checkFirstCity() {
     var firstCity = JSON.parse(localStorage.getItem('firstCity'));
     console.log("First city: " + firstCity);
 
-    var currCity = JSON.parse(localStorage.getItem('currentCity'));
+    var currentCity = JSON.parse(localStorage.getItem('currentCity'));
 
     var prevCityCheck = JSON.parse(localStorage.getItem('previousCities'));
     console.log("Previous cities: " + prevCityCheck);
@@ -256,10 +258,10 @@ function checkFirstCity() {
     }
 
     if (firstCity !== null) {
-        if (currCity !== null) {
-            console.log("Retrieving weather for your current city: " + currCity)
-            getWeather(currCity);
-        } else if (currCity === null) {
+        if (currentCity !== null) {
+            console.log("Retrieving weather for your current city: " + currentCity)
+            getWeather(currentCity);
+        } else if (currentCity === null) {
             console.log("Retrieving weather for your first city: " + firstCity)
             getWeather(firstCity);
         };

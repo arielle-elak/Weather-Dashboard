@@ -5,6 +5,12 @@
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
+.custom-container {
+    display: flex;
+    justify-content: space-around;
+    margin: 2rem;
+}
+
 ul {
     list-style-type: none;
     padding-left: 0px;
@@ -15,12 +21,18 @@ li {
 }
 
 header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
     text-align: center;
-    margin: 1rem;
+    background-color: #17a2b8;
+    color: white;
+    padding: .5rem;
 
 }
 
-h6 {
+
+h3, h6 {
     text-align: center;
 }
 
@@ -41,16 +53,24 @@ h6 {
     margin: .5rem;
 }
 
+/*Modifying bg color of btn btn info for city buttons only*/
 .button-cities {
     margin-top: 1rem;
+    background-color: white;
+    color: #17a2b8;
+}
 
+#mainBody {
+    justify-content: center;
 }
 
 
 #oneDay {
-    border: 1px solid black;
-    margin: 1rem;
-    padding: 1rem;
+    border: 10px outset #17a2b8;
+    margin: 2rem;
+    padding: 2rem;
+    align-items: center;
+    justify-content: center;
 }
 
 #fiveDay {
@@ -59,10 +79,11 @@ h6 {
 
 #weatherBlocks {
     margin-top: 2rem;
+    justify-content: center;
 }
 
 .dayBlock {
-    border: 1px solid black;
+    border: 5px inset #17a2b8;
     padding: 1rem;
     margin: .5rem;
 }

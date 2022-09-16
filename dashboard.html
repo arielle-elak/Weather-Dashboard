@@ -20,9 +20,10 @@
 <body onload ="checkFirstCity()">
     <header class="col-12">
         <h1>Weather Dashboard</h1>
+        <h4 id="todayDate"></h4>
     </header>
 
-    <div class="container-fluid">
+    <div class="custom-container">
         <div class="row">
         <!--START Sidebar content for initial search-->
         <section id="sideBody" class="col-12 col-md-3 col-lg-3">
@@ -30,7 +31,7 @@
                 <label for = "textBox">Search for a City: </label>
                 <input type="text" id = "textBox" name="textBox" autofocus="true">
                 <h6 id="responseText" class="col-12"></h6>
-                <input type="submit" id="submitBtn" class="button">
+                <input type="submit" id="submitBtn" class="button btn btn-info">
                 <hr/>
                 <h6>Your Previous Searches</h6>
             </div>
@@ -42,8 +43,8 @@
         <!--START Main body content for displaying weather-->
         <section id="mainBody" class="col-12 col-md-9 col-lg-9">
             <div id ="oneDay" class="row">
+                <div class = "col-12 col-sm-6 col-md-6 col-lg-5 col-xl-4">
 
-                <div class = "col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
                     <h2 id ="weather-search-term"></h2>
                     <p id ="conditions"></p>
                     <img id ="wicon" src=""/>
@@ -63,7 +64,7 @@
 
             </div>
             <div id ="fiveDay">
-                <h2></h2>
+                <h3></h3>
                 <!--Blocks for five day weather forecast will go here-->
                 <div id="weatherBlocks" class="row">
                 </div>
