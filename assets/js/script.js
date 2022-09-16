@@ -17,7 +17,7 @@ var responseText = $('#responseText');
 function checkStorage() {
     if (JSON.parse(localStorage.getItem('previousCities')) !== null) {
         console.log("Welcome back! Redirecting you.");
-        window.location.replace("/dashboard.html");
+        window.location.replace('./dashboard.html');
 
     } else {
         console.log("Welcome, new user!");
@@ -49,7 +49,7 @@ var homeInputHandler = function (event) {
             } else {
                 responseText.text("");
                 localStorage.setItem("firstCity", JSON.stringify(city));
-                window.location.replace("Weather-Dashboard/dashboard.html");
+                window.location.replace('./dashboard.html');
             }
         });
 };

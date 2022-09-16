@@ -254,7 +254,7 @@ function checkFirstCity() {
 
     if (firstCity === null && currentCity === null && prevCityCheck === null) {
         console.log("First time! Back to home.")
-        window.location.replace("index.html");
+        window.location.replace('./index.html');
     }
 
     if (firstCity !== null) {
