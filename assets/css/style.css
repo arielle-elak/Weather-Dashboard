@@ -21,14 +21,10 @@ li {
 }
 
 header {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
     text-align: center;
     background-color: #17a2b8;
     color: white;
     padding: .5rem;
-
 }
 
 
@@ -48,8 +44,13 @@ h3, h6 {
     width: 100%;
 }
 
+#searchBoxHome {
+    margin: 1rem;
+    text-align: center;
+    font-size: 3rem;
+}
+
 #textBox, #submitBtn, .cities {
-    width: 100%;
     margin: .5rem;
 }
 
